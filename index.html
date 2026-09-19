@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhirup Bora | ArcSphere_Studios</title>
+    <!-- Font Awesome for crisp icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a0aec0;
+            --accent: #38bdf8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* REPLACE THE URL BELOW TO CHANGE YOUR BACKGROUND IMAGE */
+            background-image: linear-gradient(rgba(15, 12, 41, 0.8), rgba(36, 36, 62, 0.8)), url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* LIQUID GLASS UTILITY */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- INTRO SCREEN --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Heavy blur overlay to hide the background content initially */
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease;
+        }
+
+        .intro-card {
+            padding: 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .intro-name {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin: 15px 0 5px 0;
+        }
+
+        .intro-greeting {
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .continue-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .continue-btn:hover {
+            background: white;
+            color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* PAGE ROUTING SYSTEM */
+        .page {
+            display: none;
+            padding: 30px 20px 120px 20px; /* 120px bottom padding clears the dock */
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HOME PAGE SPECIFICS --- */
+        .profile-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--glass-border);
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .main-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .category-card:hover { transform: scale(1.05); }
+        .category-card i { font-size: 28px; margin-bottom: 10px; color: var(--accent); }
+        .category-card p { font-size: 14px; font-weight: 600; }
+
+        .social-links {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .social-btn {
+            color: var(--text-main);
+            font-size: 24px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .social-btn:hover { color: var(--accent); }
+
+        /* --- SUB-PAGE SPECIFICS --- */
+        .page-header {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .thumbnail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* Landscape thumbnails (16:9) */
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        /* Portrait thumbnails (9:16) for Shorts */
+        .thumbnail-portrait {
+            width: 100%;
+            aspect-ratio: 9/16;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .quote-box {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-size: 15px;
+            padding: 0 15px;
+        }
+
+        .quote-author {
+            display: block;
+            margin-top: 5px;
+            font-weight: 600;
+            font-style: normal;
+            color: var(--accent);
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 600;
+            border: 1px solid var(--glass-border);
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* List Items (Search / About) */
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .list-item i { margin-right: 15px; font-size: 20px; color: var(--accent); }
+
+        /* Love link specifically */
+        .love-link i { color: #ef4444; } /* Red heart */
+
+        /* --- BOTTOM DOCK --- */
+        .dock-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            z-index: 1000;
+        }
+
+        .dock {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 10px;
+            border-radius: 30px;
+        }
+
+        .dock-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 10px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .dock-btn:hover, .dock-btn.active-dock {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="glass intro-card">
+            <img src="Profile.jpeg" alt="Abhirup" class="profile-pic">
+            <h1 class="intro-name">Abhirup Bora</h1>
+            <p class="intro-greeting">Welcome to my portfolio.</p>
+            <button class="continue-btn" onclick="enterPortfolio()">Continue</button>
+        </div>
+    </div>
+
+    <!-- 1. HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="profile-container">
+            <img src="Profile.jpeg" alt="Profile" class="profile-pic">
+            <h2>Abhirup Bora</h2>
+        </div>
+
+        <div class="main-cards-grid">
+            <div class="glass category-card" onclick="navigate('music')">
+                <i class="fa-solid fa-guitar"></i>
+                <p>Music</p>
+            </div>
+            <div class="glass category-card" onclick="navigate('tech')">
+                <i class="fa-solid fa-microchip"></i>
+                <p>Technology</p>
+            </div>
+            <div class="glass category-card" onclick="navigate('editing')">
+                <i class="fa-solid fa-pen-nib"></i>
+                <p>Editing</p>
+            </div>
+        </div>
+
+        <div class="glass social-links">
+            <a href="https://discord.gg/VQb7g8Hhns" target="_blank" class="social-btn"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://www.instagram.com/abhirupbora__/" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://github.com/abhirupbora" target="_blank" class="social-btn"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <!-- 2. MUSIC PAGE -->
+    <div id="music" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-music"></i> Music</h2>
+        
+        <div class="thumbnail-container">
+            <!-- Changed to thumbnail-portrait for Shorts aspect ratio -->
+            <a href="https://www.youtube.com/shorts/1K7Y2liGIgI" target="_blank">
+                <img src="Protidine.jpeg" alt="Video 1" class="thumbnail-portrait">
+            </a>
+            <a href="https://www.instagram.com/p/DZ20uQWzlzb/" target="_blank">
+                <img src="NahorFule.png" alt="Video 2" class="thumbnail-portrait">
+            </a>
+        </div>
+
+        <div class="section-divider">- Latest Releases -</div>
+        
+        <div class="quote-box">
+            "Where words fail, music speaks."
+            <span class="quote-author">- Hans Christian Andersen</span>
+        </div>
+
+        <a href="https://certificates.trinitycollege.com/949838b5-8e8f-4a18-a0a8-7193400d796a?key=5613e4cd544405a1507f7ac639d339013cc8b5da49fe98813884d7b74272f618#acc.YQquMBIm" target="_blank" class="action-btn">Download Certification</a>
+    </div>
+
+    <!-- 3. TECHNOLOGY PAGE -->
+    <div id="tech" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-code"></i> Technology</h2>
+        
+        <div class="thumbnail-container">
+            <!-- Changed to thumbnail-portrait for Shorts aspect ratio -->
+            <a href="https://www.youtube.com/shorts/EjZVtlFISkI" target="_blank">
+                <img src="DotMatrix.jpeg" alt="Project 1" class="thumbnail-portrait">
+            </a>
+            <a href="YOUR_PROJECT_VIDEO_2" target="_blank">
+                <img src="https://placehold.co/400x711/1e1e1e/38bdf8?text=Project+2" alt="Project 2" class="thumbnail-portrait">
+            </a>
+        </div>
+
+        <div class="section-divider">- Latest Projects -</div>
+        
+        <div class="quote-box">
+            "The science of today is the technology of tomorrow."
+            <span class="quote-author">- Edward Teller</span>
+        </div>
+
+        <a href="https://github.com/abhirupbora" target="_blank" class="action-btn">Documentation on GitHub</a>
+    </div>
+
+    <!-- 4. EDITING PAGE -->
+    <div id="editing" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-scissors"></i> Editing</h2>
+        
+        <div class="thumbnail-container">
+            <!-- These remain landscape (16:9) -->
+            <a href="https://www.youtube.com/watch?v=5Par-mxvTE4" target="_blank">
+                <img src="Pokemon.jpg" alt="Edit 1" class="thumbnail">
+            </a>
+            <a href="https://www.youtube.com/watch?v=0mYgMOMmqzE" target="_blank">
+                <img src="SteinsGate.jpg" alt="Edit 2" class="thumbnail">
+            </a>
+        </div>
+
+        <div class="section-divider">- My Top Edits -</div>
+        
+        <div class="quote-box">
+            "Editing is the unseen art that shapes the soul of the story."
+            <span class="quote-author">- Walter Murch</span>
+        </div>
+
+        <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="action-btn">Youtube</a>
+    </div>
+
+    <!-- 5. CONTACT PAGE -->
+    <div id="contact" class="page">
+        <h2 class="page-header">Contact Me</h2>
+        
+        <div class="profile-container">
+            <img src="Coffee.png" alt="Profile" class="profile-pic">
+            <h3 style="margin-top: 15px;">Founder of ArcSphere_Studios</h3>
+        </div>
+
+        <a href="mailto:abhirupbora99@gmail.com" class="action-btn"><i class="fa-regular fa-envelope"></i> Email</a>
+    </div>
+
+    <!-- 6. SEARCH PAGE (Magnifying Glass) -->
+    <div id="search" class="page">
+        <h2 class="page-header">Explore</h2>
+        
+        <a href="https://open.spotify.com/user/tm0a33dxj3y5bjobwbcqxuoiq?si=1623d6948cc043af" target="_blank" class="glass list-item">
+            <i class="fa-brands fa-spotify"></i> Spotify
+        </a>
+        <a href="https://my.play/AbhirupBora" target="_blank" class="glass list-item">
+            <i class="fa-brands fa-google-play"></i> Google Play Games
+        </a>
+        <div class="glass list-item" onclick="navigate('about')">
+            <i class="fa-solid fa-trophy"></i> Achievements
+        </div>
+        <div class="glass list-item" onclick="navigate('music')">
+            <i class="fa-solid fa-music"></i> Music
+        </div>
+        <div class="glass list-item" onclick="navigate('tech')">
+            <i class="fa-solid fa-microchip"></i> Projects
+        </div>
+        
+        <div class="section-divider"></div>
+
+        <!-- The Rickroll Link -->
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="glass list-item love-link">
+            <i class="fa-solid fa-heart"></i> Love
+        </a>
+    </div>
+
+    <!-- 7. ABOUT ME / ACHIEVEMENTS PAGE (Trophy) -->
+    <div id="about" class="page">
+        <h2 class="page-header">About Me</h2>
+        
+        <div class="glass" style="padding: 20px; margin-bottom: 20px;">
+            <p style="margin-bottom: 10px;"><strong>Country:</strong> India 🇮🇳</p>
+            <p style="margin-bottom: 10px;"><strong>State:</strong> Assam</p>
+            <p style="margin-bottom: 10px;"><strong>Education:</strong> Cotton University</p>
+            <p style="margin-bottom: 10px;"><strong>Guitar:</strong> Grade I</p>
+            <p><strong>Hobby:</strong> Project Development</p>
+        </div>
+
+        <a href="mailto:abhirupbora99@gmail.com" class="action-btn"><i class="fa-regular fa-envelope"></i> Email</a>
+    </div>
+
+    <!-- BOTTOM NAVIGATION DOCK -->
+    <div class="dock-container">
+        <nav class="glass dock">
+            <button class="dock-btn" onclick="navigate('contact')" id="btn-contact">
+                <i class="fa-solid fa-circle-question"></i>
+            </button>
+            <button class="dock-btn" onclick="navigate('about')" id="btn-about">
+                <i class="fa-solid fa-trophy"></i>
+            </button>
+            <button class="dock-btn active-dock" onclick="navigate('home')" id="btn-home">
+                <i class="fa-solid fa-house"></i>
+            </button>
+            <button class="dock-btn" onclick="navigate('search')" id="btn-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </nav>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Intro Screen logic
+        function enterPortfolio() {
+            const intro = document.getElementById('intro-screen');
+            // Slide up and fade out
+            intro.style.transform = 'translateY(-100vh) scale(0.9)';
+            intro.style.opacity = '0';
+            
+            // Remove from DOM flow after animation finishes
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 800);
+        }
+
+        // Navigation logic
+        function navigate(pageId) {
+            // 1. Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 2. Show target page
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            // 3. Update active state on dock icons
+            const dockBtns = document.querySelectorAll('.dock-btn');
+            dockBtns.forEach(btn => btn.classList.remove('active-dock'));
+
+            // Map pages to dock buttons to highlight the right icon
+            if (pageId === 'contact') document.getElementById('btn-contact').classList.add('active-dock');
+            else if (pageId === 'about') document.getElementById('btn-about').classList.add('active-dock');
+            else if (pageId === 'home') document.getElementById('btn-home').classList.add('active-dock');
+            else if (pageId === 'search') document.getElementById('btn-search').classList.add('active-dock');
+        }
+    </script>
+</body>
+</html>
