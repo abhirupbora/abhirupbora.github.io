@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhirup Bora | ArcSphere_Studios</title>
-    <!-- Font Awesome for crisp icons -->
+    <title>Abhirup Bora | ArcSphere Studios</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #a0aec0;
+            --bg-color: #09090b; 
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --accent: #38bdf8;
+            --premium: #fbbf24;
         }
 
         * {
@@ -26,8 +27,9 @@
         }
 
         body {
-            /* REPLACE THE URL BELOW TO CHANGE YOUR BACKGROUND IMAGE */
-            background-image: linear-gradient(rgba(15, 12, 41, 0.8), rgba(36, 36, 62, 0.8)), url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');
+            /* Stunning, non-AI dark abstract macro photography background */
+            background-color: #09090b;
+            background-image: linear-gradient(rgba(9, 9, 11, 0.7), rgba(9, 9, 11, 0.85)), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -39,505 +41,721 @@
         /* LIQUID GLASS UTILITY */
         .glass {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* --- INTRO SCREEN --- */
-        #intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            /* Heavy blur overlay to hide the background content initially */
-            background: rgba(15, 12, 41, 0.6);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease;
-        }
-
-        .intro-card {
-            padding: 40px;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            transform: scale(0.9);
-            opacity: 0;
-            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .intro-name {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin: 15px 0 5px 0;
-        }
-
-        .intro-greeting {
-            color: var(--text-muted);
-            font-size: 16px;
-            font-weight: 300;
-            margin-bottom: 30px;
-        }
-
-        .continue-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .continue-btn:hover {
-            background: white;
-            color: black;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8) translateY(20px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-
-        /* PAGE ROUTING SYSTEM */
+        /* PAGE ROUTING */
         .page {
             display: none;
-            padding: 30px 20px 120px 20px; /* 120px bottom padding clears the dock */
+            padding: 20px 20px 140px 20px;
             max-width: 600px;
             margin: 0 auto;
-            animation: fadeIn 0.4s ease forwards;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
-        .page.active {
-            display: block;
-        }
+        .page.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- HOME PAGE SPECIFICS --- */
-        .profile-container {
-            text-align: center;
-            margin-bottom: 30px;
+        /* LOGIN SCREEN */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(9, 9, 11, 0.95);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10000; transition: opacity 0.6s ease, transform 0.6s ease;
         }
+        
+        .login-box { text-align: center; width: 85%; max-width: 350px; padding: 40px; }
+        .login-btn {
+            background: var(--text-main); color: #09090b; width: 100%;
+            padding: 15px; border-radius: 30px; font-weight: 800; font-size: 16px;
+            border: none; cursor: pointer; margin-top: 30px; transition: transform 0.2s;
+        }
+        .login-btn:hover { transform: scale(1.02); }
 
+        /* PROFILE PICS */
         .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--glass-border);
-            object-fit: cover;
-            margin-bottom: 10px;
+            width: 110px; height: 110px; border-radius: 50%;
+            object-fit: cover; margin-bottom: 15px;
+            border: 2px solid var(--glass-border);
         }
 
-        .main-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+        /* HOME PAGE SPECIFIC */
+        .home-quote {
+            text-align: center; font-style: italic; font-weight: 300;
+            color: var(--text-muted); font-size: 14px; margin: 10px 20px 30px 20px;
         }
 
-        .category-card {
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease;
+        .six-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px;
         }
+        .grid-card {
+            padding: 20px 5px; text-align: center; cursor: pointer;
+            border-radius: 20px; transition: background 0.3s;
+        }
+        .grid-card:hover { background: rgba(255,255,255,0.08); }
+        .grid-card i { font-size: 24px; margin-bottom: 8px; color: var(--accent); }
+        .grid-card p { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* SPLIT DOCKS */
+        .split-docks-container {
+            display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px;
+        }
+        .mini-dock {
+            display: flex; justify-content: space-evenly; flex: 1; padding: 15px; border-radius: 25px;
+        }
+        .mini-dock a { color: var(--text-main); font-size: 20px; transition: color 0.3s; text-decoration: none; }
+        .mini-dock a:hover { color: var(--accent); }
+
+        /* MULTI-PURPOSE UI */
+        .page-header { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 25px; }
+        .quote-box { text-align: center; font-style: italic; color: var(--text-muted); margin: 25px 0; font-size: 15px; }
+        .quote-author { display: block; margin-top: 5px; font-weight: 600; font-style: normal; color: var(--accent); }
         
-        .category-card:hover { transform: scale(1.05); }
-        .category-card i { font-size: 28px; margin-bottom: 10px; color: var(--accent); }
-        .category-card p { font-size: 14px; font-weight: 600; }
-
-        .social-links {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
+        .action-btn {
+            display: block; width: 100%; padding: 16px; text-align: center; border-radius: 25px;
+            font-weight: 600; text-decoration: none; border: 1px solid var(--glass-border);
+            background: var(--glass-bg); color: white; cursor: pointer; transition: all 0.3s;
         }
-
-        .social-btn {
-            color: var(--text-main);
-            font-size: 24px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+        .action-btn:hover { background: var(--text-main); color: #000; }
         
-        .social-btn:hover { color: var(--accent); }
-
-        /* --- SUB-PAGE SPECIFICS --- */
-        .page-header {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 25px;
-            font-weight: 800;
+        /* Premium Lock */
+        .premium-btn { border-color: var(--premium); color: var(--premium); }
+        .premium-btn:hover { background: var(--premium); color: #000; }
+        .locked-grid { position: relative; }
+        .locked-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 15px; z-index: 10; color: var(--premium); font-size: 40px;
         }
 
-        .thumbnail-container {
+        /* THUMBNAILS */
+        .vid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .thumb-portrait { width: 100%; aspect-ratio: 9/16; border-radius: 15px; object-fit: cover; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); }
+        .thumb-landscape { width: 100%; aspect-ratio: 16/9; border-radius: 15px; object-fit: cover; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); }
+
+        /* BUBBLES (ABOUT PAGE) */
+        .bubble-section { margin-bottom: 25px; padding: 20px; }
+        .bubble-title { font-size: 16px; font-weight: 600; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+        .bubble-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .bubble {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 16px; border-radius: 30px; font-size: 14px;
+        }
+
+        /* EXPLORE & SEARCH UI */
+        .explore-item {
+            display: flex; align-items: center; padding: 18px 20px; margin-bottom: 12px;
+            border-radius: 20px; cursor: pointer; font-weight: 600; text-decoration: none; color: white;
+            transition: transform 0.2s, background 0.2s; border: 1px solid var(--glass-border);
+        }
+        .explore-item:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+        .explore-item i { margin-right: 15px; font-size: 20px; color: var(--accent); }
+        
+        /* New Sleek Search Grid */
+        .search-results-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
         }
-
-        /* Landscape thumbnails (16:9) */
-        .thumbnail {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
+        .search-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px 10px; border-radius: 20px; text-align: center;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: white; text-decoration: none; cursor: pointer; transition: all 0.3s ease;
         }
+        .search-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+        .search-btn i, .search-btn span.emoji { font-size: 24px; margin-bottom: 8px; }
+        .search-btn.premium-search { color: var(--premium); border-color: rgba(251, 191, 36, 0.3); }
 
-        /* Portrait thumbnails (9:16) for Shorts */
-        .thumbnail-portrait {
-            width: 100%;
-            aspect-ratio: 9/16;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
+        .inspiration-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; margin-top: 20px;}
+        .inspire-circle { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 2px solid var(--glass-border); background: rgba(255,255,255,0.1); }
+        .inspire-name { font-size: 12px; color: var(--text-muted); }
+
+        /* SEARCH BAR */
+        .search-container { margin-bottom: 25px; position: relative; }
+        .search-input {
+            width: 100%; padding: 18px 20px 18px 50px; border-radius: 30px; background: rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border); color: white; font-size: 16px; outline: none;
+            backdrop-filter: blur(10px);
         }
+        .search-icon-inside { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 18px; }
 
-        .section-divider {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 10px;
+        /* BOTTOM DOCK */
+        .main-dock-wrapper {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 450px; z-index: 1000;
         }
-
-        .quote-box {
-            text-align: center;
-            font-style: italic;
-            color: var(--text-muted);
-            margin: 20px 0;
-            font-size: 15px;
-            padding: 0 15px;
+        .main-dock {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 15px; border-radius: 40px; background: rgba(9, 9, 11, 0.85);
+            border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px);
         }
-
-        .quote-author {
-            display: block;
-            margin-top: 5px;
-            font-weight: 600;
-            font-style: normal;
-            color: var(--accent);
-        }
-
-        .action-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-decoration: none;
-            border-radius: 16px;
-            font-weight: 600;
-            border: 1px solid var(--glass-border);
-            margin-top: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn:hover {
-            background: var(--accent);
-            color: #000;
-        }
-
-        /* List Items (Search / About) */
-        .list-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        
-        .list-item i { margin-right: 15px; font-size: 20px; color: var(--accent); }
-
-        /* Love link specifically */
-        .love-link i { color: #ef4444; } /* Red heart */
-
-        /* --- BOTTOM DOCK --- */
-        .dock-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            z-index: 1000;
-        }
-
-        .dock {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 15px 10px;
-            border-radius: 30px;
-        }
-
         .dock-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 10px;
-            transition: transform 0.2s ease, color 0.2s ease;
+            background: none; border: none; color: var(--text-muted); font-size: 22px;
+            padding: 12px 20px; border-radius: 30px; cursor: pointer; transition: all 0.3s;
+        }
+        .dock-btn.active {
+            background: rgba(255,255,255,0.15); color: var(--text-main);
         }
 
-        .dock-btn:hover, .dock-btn.active-dock {
-            transform: scale(1.2);
-            color: var(--accent);
+        /* MODALS */
+        #modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 9999;
         }
+        .modal-content {
+            width: 90%; max-width: 350px; padding: 30px; text-align: center;
+            border-radius: 25px; position: relative;
+        }
+        .close-modal {
+            position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted);
+        }
+        .modal-input {
+            width: 100%; padding: 12px; margin: 15px 0; border-radius: 12px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: white;
+            outline: none;
+        }
+
+        /* STORIES DETAIL PAGE */
+        .story-hero { width: 100%; height: 220px; object-fit: cover; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); }
+        .story-text { color: var(--text-muted); line-height: 1.8; margin-bottom: 25px; font-size: 15px; text-align: justify; }
+        .story-title { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--text-main); }
 
     </style>
 </head>
 <body>
 
-    <!-- INTRO SCREEN -->
-    <div id="intro-screen">
-        <div class="glass intro-card">
-            <img src="Profile.jpeg" alt="Abhirup" class="profile-pic">
-            <h1 class="intro-name">Abhirup Bora</h1>
-            <p class="intro-greeting">Welcome to my portfolio.</p>
-            <button class="continue-btn" onclick="enterPortfolio()">Continue</button>
+    <!-- MODAL SYSTEM -->
+    <div id="modal-overlay">
+        <div class="glass modal-content" id="modal-box">
+            <i class="fa-solid fa-xmark close-modal" onclick="closeModal()"></i>
+            <h3 id="modal-title" style="margin-bottom:10px;">Title</h3>
+            <p id="modal-desc" style="color:var(--text-muted); font-size:14px;">Desc</p>
+            <div id="modal-body"></div>
+            <button class="action-btn" id="modal-submit" style="margin-top:20px;">Submit</button>
         </div>
     </div>
 
-    <!-- 1. HOME PAGE -->
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen">
+        <div class="glass login-box">
+            <img src="LoginPic.jpg" alt="Login Profile" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Abhirup+Bora&background=38bdf8&color=fff'">
+            <h2>Welcome Back</h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Authenticate to continue.</p>
+            <button class="login-btn" onclick="enterSite()">Access Portfolio</button>
+        </div>
+    </div>
+
+    <!-- 1. MAIN HOME PAGE -->
     <div id="home" class="page active">
-        <div class="profile-container">
-            <img src="Profile.jpeg" alt="Profile" class="profile-pic">
-            <h2>Abhirup Bora</h2>
+        <div style="text-align: center;">
+            <img src="Profile.jpeg" alt="Abhirup" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Abhirup+Bora&background=38bdf8&color=fff'">
+            <h1 style="font-size: 28px; font-weight: 800;">Abhirup Bora</h1>
+        </div>
+        <p class="home-quote">"There is no hierarchy in human souls, just as there is no higher purpose than love."</p>
+
+        <!-- 6 Category Grid -->
+        <div class="six-grid">
+            <div class="glass grid-card" onclick="navigate('guitar')"><i class="fa-solid fa-guitar"></i><p>Guitar</p></div>
+            <div class="glass grid-card" onclick="navigate('tech')"><i class="fa-solid fa-microchip"></i><p>Technology</p></div>
+            <div class="glass grid-card" onclick="navigate('editing')"><i class="fa-solid fa-pen-nib"></i><p>Editing</p></div>
+            <div class="glass grid-card" onclick="navigate('flute')"><i class="fa-solid fa-wind"></i><p>Flute</p></div>
+            <div class="glass grid-card" onclick="navigate('gaming')"><i class="fa-solid fa-gamepad"></i><p>Gaming</p></div>
+            <div class="glass grid-card" onclick="navigate('stories-main')"><i class="fa-solid fa-book-open"></i><p>Story</p></div>
         </div>
 
-        <div class="main-cards-grid">
-            <div class="glass category-card" onclick="navigate('music')">
-                <i class="fa-solid fa-guitar"></i>
-                <p>Music</p>
+        <!-- Split Docks -->
+        <div class="split-docks-container">
+            <div class="glass mini-dock">
+                <a href="https://www.youtube.com/@SleepyLimee" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://github.com/abhirupbora" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="YOUR_LINKEDIN_LINK" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
             </div>
-            <div class="glass category-card" onclick="navigate('tech')">
-                <i class="fa-solid fa-microchip"></i>
-                <p>Technology</p>
+            <div class="glass mini-dock">
+                <a href="https://www.instagram.com/abhirupbora__/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.gg/VQb7g8Hhns" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://open.spotify.com/user/tm0a33dxj3y5bjobwbcqxuoiq?si=1623d6948cc043af" target="_blank"><i class="fa-brands fa-spotify"></i></a>
             </div>
-            <div class="glass category-card" onclick="navigate('editing')">
-                <i class="fa-solid fa-pen-nib"></i>
-                <p>Editing</p>
-            </div>
-        </div>
-
-        <div class="glass social-links">
-            <a href="https://discord.gg/VQb7g8Hhns" target="_blank" class="social-btn"><i class="fa-brands fa-discord"></i></a>
-            <a href="https://www.instagram.com/abhirupbora__/" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://github.com/abhirupbora" target="_blank" class="social-btn"><i class="fa-brands fa-github"></i></a>
-            <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </div>
 
-    <!-- 2. MUSIC PAGE -->
-    <div id="music" class="page">
-        <h2 class="page-header"><i class="fa-solid fa-music"></i> Music</h2>
-        
-        <div class="thumbnail-container">
-            <!-- Changed to thumbnail-portrait for Shorts aspect ratio -->
-            <a href="https://www.youtube.com/shorts/1K7Y2liGIgI" target="_blank">
-                <img src="Protidine.jpeg" alt="Video 1" class="thumbnail-portrait">
-            </a>
-            <a href="https://www.instagram.com/p/DZ20uQWzlzb/" target="_blank">
-                <img src="NahorFule.png" alt="Video 2" class="thumbnail-portrait">
-            </a>
+    <!-- GUITAR PAGE -->
+    <div id="guitar" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-guitar"></i> Guitar</h2>
+        <div class="vid-grid">
+            <a href="https://www.youtube.com/shorts/1K7Y2liGIgI" target="_blank"><img src="Protidine.jpeg" class="thumb-portrait"></a>
+            <a href="https://www.instagram.com/p/DZ20uQWzlzb/" target="_blank"><img src="NahorFule.png" class="thumb-portrait"></a>
+            <a href="https://www.instagram.com/reel/DaI7rZOT81E/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="><img src="Photograph.jpg" class="thumb-portrait"></a>
+            <a href="https://www.instagram.com/stories/highlights/17936148789277402/"><img src="ChooLo.jpg" class="thumb-portrait"></a>
         </div>
-
-        <div class="section-divider">- Latest Releases -</div>
-        
-        <div class="quote-box">
-            "Where words fail, music speaks."
-            <span class="quote-author">- Hans Christian Andersen</span>
-        </div>
-
+        <p class="quote-box">"Where words fail, music speaks."</p>
         <a href="https://certificates.trinitycollege.com/949838b5-8e8f-4a18-a0a8-7193400d796a?key=5613e4cd544405a1507f7ac639d339013cc8b5da49fe98813884d7b74272f618#acc.YQquMBIm" target="_blank" class="action-btn">Download Certification</a>
     </div>
 
-    <!-- 3. TECHNOLOGY PAGE -->
+    <!-- TECHNOLOGY PAGE -->
     <div id="tech" class="page">
         <h2 class="page-header"><i class="fa-solid fa-code"></i> Technology</h2>
-        
-        <div class="thumbnail-container">
-            <!-- Changed to thumbnail-portrait for Shorts aspect ratio -->
-            <a href="https://www.youtube.com/shorts/EjZVtlFISkI" target="_blank">
-                <img src="DotMatrix.jpeg" alt="Project 1" class="thumbnail-portrait">
-            </a>
-            <a href="https://youtube.com/shorts/5nwSOgO7U_w?si=tBFqPLilShc7hRol" target="_blank">
-                <img src="MIDI.jpg" alt="Project 2" class="thumbnail-portrait">
-            </a>
+        <div class="vid-grid">
+            <a href="https://www.youtube.com/shorts/EjZVtlFISkI" target="_blank"><img src="DotMatrix.jpeg" class="thumb-portrait"></a>
+            <a href="https://youtube.com/shorts/5nwSOgO7U_w"><img src="MIDI.jpg" class="thumb-portrait"></a>
+            <a href="https://www.youtube.com/watch?v=oN5PlHBWUPk"><img src="Thermal.jpeg" class="thumb-portrait"></a>
+            <a href="https://www.instagram.com/stories/highlights/18425294644133343/"><img src="Amplifier.jpg" class="thumb-portrait"></a>
         </div>
-
-        <div class="section-divider">- Latest Projects -</div>
-        
-        <div class="quote-box">
-            "The science of today is the technology of tomorrow."
-            <span class="quote-author">- Edward Teller</span>
-        </div>
-
+        <p class="quote-box">"The science of today is the technology of tomorrow."</p>
         <a href="https://github.com/abhirupbora" target="_blank" class="action-btn">Documentation on GitHub</a>
     </div>
 
-    <!-- 4. EDITING PAGE -->
+    <!-- EDITING PAGE -->
     <div id="editing" class="page">
         <h2 class="page-header"><i class="fa-solid fa-scissors"></i> Editing</h2>
-        
-        <div class="thumbnail-container">
-            <!-- These remain landscape (16:9) -->
-            <a href="https://www.youtube.com/watch?v=5Par-mxvTE4" target="_blank">
-                <img src="Pokemon.jpg" alt="Edit 1" class="thumbnail">
-            </a>
-            <a href="https://www.youtube.com/watch?v=0mYgMOMmqzE" target="_blank">
-                <img src="SteinsGate.jpg" alt="Edit 2" class="thumbnail">
-            </a>
+        <div class="vid-grid">
+            <a href="https://www.youtube.com/watch?v=5Par-mxvTE4" target="_blank"><img src="Pokemon.jpg" class="thumb-landscape"></a>
+            <a href="https://www.youtube.com/watch?v=0mYgMOMmqzE" target="_blank"><img src="SteinsGate.jpg" class="thumb-landscape"></a>
+            <a href="https://www.youtube.com/watch?v=GJpguwwvIiY"><img src="Nature.jpg" class="thumb-landscape"></a>
+            <a href="https://www.youtube.com/watch?v=PK_uykpY-QY"><img src="Often.jpg" class="thumb-landscape"></a>
+            <a href="https://www.youtube.com/watch?v=FBHJ-Pc9FuU"><img src="Dancin.jpg" class="thumb-landscape"></a>
+            <a href="https://www.youtube.com/watch?v=hdzAQEaevR0"><img src="Zaalima.jpg" class="thumb-landscape"></a>
         </div>
-
-        <div class="section-divider">- My Top Edits -</div>
-        
-        <div class="quote-box">
-            "Editing is the unseen art that shapes the soul of the story."
-            <span class="quote-author">- Walter Murch</span>
-        </div>
-
-        <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="action-btn">Youtube</a>
+        <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="action-btn">More on YouTube</a>
     </div>
 
-    <!-- 5. CONTACT PAGE -->
+    <!-- FLUTE PAGE (LOCKED) -->
+    <div id="flute" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-wind"></i> Flute</h2>
+        <div class="locked-grid">
+            <div class="vid-grid" style="filter: blur(8px) opacity(0.5);">
+                <div class="thumb-portrait"></div>
+                <div class="thumb-portrait"></div>
+                <div class="thumb-portrait"></div>
+                <div class="thumb-portrait"></div>
+            </div>
+            <div class="locked-overlay"><i class="fa-solid fa-lock"></i></div>
+        </div>
+        <button class="action-btn premium-btn" onclick="openPremiumModal()">Purchase Premium</button>
+    </div>
+
+    <!-- GAMING PAGE -->
+    <div id="gaming" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-gamepad"></i> Gaming</h2>
+        <div class="vid-grid">
+            <a href="https://www.youtube.com/watch?v=g23IB3RRWJs"><img src="COD.jpg" class="thumb-landscape"></a>
+            <a href="https://youtu.be/LzlnEiFVtdk?si=XC4j6bqeRzQ1FlTk"><img src="Gangster.jpeg" class="thumb-landscape"></a>
+        </div>
+        <p style="text-align:center; margin: 20px 0;">- Latest Releases -</p>
+        <a href="https://my.play/AbhirupBora" target="_blank" class="action-btn">Play with Me</a>
+    </div>
+
+    <!-- STORIES MAIN MENU -->
+    <div id="stories-main" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-book-open"></i> Stories</h2>
+        
+        <p style="text-align:center; margin-bottom:15px; font-weight:600;">- Fictional Stories -</p>
+        <div class="vid-grid">
+            <div onclick="navigate('story-omongol')" style="cursor:pointer;">
+                <img src="Omongol.jpg" class="thumb-portrait">
+                <p style="text-align:center; font-size:14px; margin-top:5px; font-weight:600;">The Rise of Omongol</p>
+            </div>
+            <div onclick="navigate('story-fate')" style="cursor:pointer;">
+                <img src="faith.jpg" class="thumb-portrait">
+                <p style="text-align:center; font-size:14px; margin-top:5px; font-weight:600;">Fate or Faith</p>
+            </div>
+        </div>
+
+        <p style="text-align:center; margin:25px 0 15px 0; font-weight:600;">- Storytime -</p>
+        <div class="vid-grid">
+            <div onclick="navigate('story-lift')" style="cursor:pointer;">
+                <img src="elevator.png" class="thumb-portrait">
+                <p style="text-align:center; font-size:14px; margin-top:5px; font-weight:600;">The Lift Incident</p>
+            </div>
+            <div onclick="navigate('story-airport')" style="cursor:pointer;">
+                <img src="Airport.jpg" class="thumb-portrait">
+                <p style="text-align:center; font-size:14px; margin-top:5px; font-weight:600;">The Silent Airport</p>
+            </div>
+        </div>
+
+        <div class="quote-box" style="margin-top: 40px;">
+            "After all, we're all just stories in the end. Just make it a good one."
+            <span class="quote-author">- The Doctor</span>
+        </div>
+    </div>
+
+    <!-- STORY 1: OMONGOL -->
+    <div id="story-omongol" class="page">
+        <!-- Cinematic Unsplash link for Omongol -->
+        <img src="https://media.istockphoto.com/id/1816810090/photo/3d-rendering-magic-library.jpg?s=612x612&w=0&k=20&c=NJBEIlpPUwmz2Jeno6WexGK07RM02T0qAy5dA7Dx-WI=" class="story-hero">
+        <h2 class="story-title">The Rise of Omongol</h2>
+        <p class="story-text">
+            The rain over the hills of the old town never seemed to stop. Seeking refuge from a violent summer thunderstorm, Rye pushed open the heavy oak doors of an abandoned, centuries-old library. The air inside was thick with the scent of petrichor and decaying parchment. In the flickering, melancholic gold of a single lantern, he found her—a striking stranger draped in a simple grey shirt, her eyes holding the depth of a forgotten ocean.
+            <br><br>
+            What began as quiet, intellectual banter amidst the dusty shelves rapidly evolved into a breathtaking, heart-fluttering romance. But every soul in this town cast a shadow. Hers was an ancestral curse, a bloodline mandate binding her to a slumbering cosmic entity known only as the Youtun, Omongol. 
+            <br><br>
+            As the lines between reality and nightmare begin to blur, affection warps into terror. Rye is thrust into a desperate, supernatural struggle where the sky fractures, and he must decide: is a love that defies the stars worth tearing the world apart?
+        </p>
+        <button class="action-btn premium-btn" onclick="openPremiumModal()">Activate Premium to Read</button>
+    </div>
+
+    <!-- STORY 2: FATE OR FAITH -->
+    <div id="story-fate" class="page">
+        <!-- Cinematic Unsplash link for Fate or Faith -->
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/036/006/041/small/ai-generated-silhouette-of-a-couple-on-the-sunset-couple-of-young-people-enjoying-the-beauty-of-the-afternoon-sun-for-valentine-greeting-romantic-wallpaper-concept-generative-ai-photo.jpg" class="story-hero">
+        <h2 class="story-title">Fate or Faith</h2>
+        <p class="story-text">
+            Anthony’s entire world was framed by the cold glass of an aquarium and the metal wheels of his chair. A brilliant but deeply introverted writer, he had long accepted that his life was a spectator sport, watching others move while he remained still. Then came Charlotte.
+            <br><br>
+            She was a sunbeam bursting through the quiet blue light of the clinic—radiant, unabashedly extroverted, and utterly relentless in her kindness. She didn't just see the boy confined to the chair; she saw the storyteller within. Her laughter became the anchor Anthony never knew he needed. 
+            <br><br>
+            As the seasons drift by in a breathtaking montage of stolen glances and profound emotional confessions, Charlotte discovers her own quiet obsession. Driven by a love so pure it borders on the miraculous, she dedicates her brilliant mind to science and engineering. She isn't just building mechanical legs for the boy she loves. She is declaring war on fate itself, determined to ensure they can walk side-by-side beneath a sky full of stars.
+        </p>
+        <button class="action-btn premium-btn" onclick="openPremiumModal()">Activate Premium to Read</button>
+    </div>
+
+    <!-- STORY 3: LIFT -->
+    <div id="story-lift" class="page">
+        <!-- Cinematic Unsplash link for the Lift Incident -->
+        <img src="https://pics.craiyon.com/2024-09-30/RoQnIk_ERsCXrC6EazaFcw.webp" class="story-hero">
+        <h2 class="story-title">The Lift Incident</h2>
+        <p class="story-text">
+            It was supposed to be a mundane Tuesday. Just a normal, forgettable afternoon hanging out with friends. But when the heavy metal doors slid shut and the elevator ground to a violent, echoing halt halfway between the third and fourth floors, the reality of the hanging steel box finally set in.
+            <br><br>
+            First came the heavy, awkward silence. Then came the panic. But inevitably, as oxygen seemed to thin and time stretched into an uncomfortable infinity, the claustrophobia birthed something else entirely: uncontrollable, ridiculous laughter.
+            <br><br>
+            Stripped of phone signals and stranded in mid-air, the enclosed space became a confession booth for pitch-black humor, absurd arguments, and chaotic camaraderie. This is the hilarious, heartwarming, and entirely true slice-of-life tale of how a mechanical failure forged an unforgettable memory, proving that sometimes the absolute best adventures happen when you're going absolutely nowhere.
+        </p>
+        <button class="action-btn premium-btn" onclick="openPremiumModal()">Activate Premium to Read</button>
+    </div>
+
+    <!-- STORY 4: AIRPORT -->
+    <div id="story-airport" class="page">
+        <!-- Cinematic Unsplash link for the Airport -->
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop" class="story-hero">
+        <h2 class="story-title">The Silent Airport</h2>
+        <p class="story-text">
+            Bombay Airport at four in the morning is a kingdom of ghosts. It is a vast, liminal space—a gleaming labyrinth of polished floors, humming fluorescent lights, and absolute, deafening silence. 
+            <br><br>
+            The quiet was almost peaceful, right up until the sickening realization struck: my flight was boarding, and I was stranded on the wrong side of security. With my power bank unceremoniously seized by tired guards, and the departure clock mercilessly ticking down its final minutes, the morning warped into a desperate, adrenaline-fueled sprint.
+            <br><br>
+            Lungs burning, bags flying, dodging the few sleepy janitors scattered across the corridors, my heart pounded a frantic, cinematic rhythm against the quiet. This is a story of urban isolation, the sheer terror of missed chances, and an anxiety-inducing race against time across the longest, emptiest terminal in the world.
+        </p>
+        <button class="action-btn premium-btn" onclick="openPremiumModal()">Activate Premium to Read</button>
+    </div>
+
+    <!-- CONTACT PAGE -->
     <div id="contact" class="page">
-        <h2 class="page-header">Contact Me</h2>
-        
-        <div class="profile-container">
-            <img src="Coffee.png" alt="Profile" class="profile-pic">
-            <h3 style="margin-top: 15px;">Founder of ArcSphere_Studios</h3>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="Coffee.png" alt="Profile" class="profile-pic" onerror="this.src='https://ui-avatars.com/api/?name=Abhirup+Bora&background=38bdf8&color=fff'">
+            <h2>Founder of ArcSphere_Studios</h2>
         </div>
-
-        <a href="mailto:abhirupbora99@gmail.com" class="action-btn"><i class="fa-regular fa-envelope"></i> Email</a>
+        
+        <a href="mailto:abhirupbora99@gmail.com" class="action-btn" style="margin-bottom:12px;"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="YOUR_LINKEDIN" class="action-btn" style="margin-bottom:12px;"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/abhirupbora" class="action-btn" style="margin-bottom:12px;"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://discord.gg/VQb7g8Hhns" class="action-btn" style="margin-bottom:12px;"><i class="fa-brands fa-discord"></i> Discord</a>
+        <button class="action-btn" onclick="openPremiumModal()" style="margin-bottom:12px;"><i class="fa-solid fa-phone"></i> Phone Number <i class="fa-solid fa-lock" style="font-size:12px; margin-left:5px;"></i></button>
     </div>
 
-    <!-- 6. SEARCH PAGE (Magnifying Glass) -->
-    <div id="search" class="page">
-        <h2 class="page-header">Explore</h2>
-        
-        <a href="https://open.spotify.com/user/tm0a33dxj3y5bjobwbcqxuoiq?si=1623d6948cc043af" target="_blank" class="glass list-item">
-            <i class="fa-brands fa-spotify"></i> Spotify
-        </a>
-        <a href="https://my.play/AbhirupBora" target="_blank" class="glass list-item">
-            <i class="fa-brands fa-google-play"></i> Google Play Games
-        </a>
-        <div class="glass list-item" onclick="navigate('about')">
-            <i class="fa-solid fa-trophy"></i> Achievements
-        </div>
-        <div class="glass list-item" onclick="navigate('music')">
-            <i class="fa-solid fa-music"></i> Music
-        </div>
-        <div class="glass list-item" onclick="navigate('tech')">
-            <i class="fa-solid fa-microchip"></i> Projects
-        </div>
-        
-        <div class="section-divider"></div>
-
-        <!-- The Rickroll Link -->
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="glass list-item love-link">
-            <i class="fa-solid fa-heart"></i> Love
-        </a>
-    </div>
-
-    <!-- 7. ABOUT ME / ACHIEVEMENTS PAGE (Trophy) -->
+    <!-- ABOUT ME PAGE -->
     <div id="about" class="page">
-        <h2 class="page-header">About Me</h2>
+        <h2 class="page-header"><i class="fa-solid fa-star"></i> About Me</h2>
         
-        <div class="glass" style="padding: 20px; margin-bottom: 20px;">
-            <p style="margin-bottom: 10px;"><strong>Country:</strong> India 🇮🇳</p>
-            <p style="margin-bottom: 10px;"><strong>State:</strong> Assam</p>
-            <p style="margin-bottom: 10px;"><strong>Education:</strong> Cotton University</p>
-            <p style="margin-bottom: 10px;"><strong>Guitar:</strong> Grade I</p>
-            <p><strong>Hobby:</strong> Project Development</p>
+        <div class="glass bubble-section">
+            <div class="bubble-title">Information</div>
+            <div class="bubble-container">
+                <span class="bubble">🇮🇳 Country: India</span>
+                <span class="bubble">📍 State: Assam</span>
+                <span class="bubble">🎓 Student @ Cotton University</span>
+                <span class="bubble">🎸 Guitar: Grade 1</span>
+                <span class="bubble">🌬️ Flute: Intermediate</span>
+                <span class="bubble">🎬 Media: Intermediate</span>
+                <span class="bubble">💻 Independent Dev @ ArcSphere_Studios</span>
+                <span class="bubble">⚡ Microelectronics</span>
+                <span class="bubble">⚽ Football & Badminton</span>
+                <span class="bubble">🕺 Modern Dance</span>
+                <span class="bubble">💪 Fitness: Intermediate</span>
+                <span class="bubble">✍️ Writer: Sci-Fi, Romance, Horror</span>
+                <span class="bubble">🎮 Gaming: Intermediate</span>
+                <span class="bubble">🍔 Food: Indian & American</span>
+            </div>
         </div>
 
-        <a href="mailto:abhirupbora99@gmail.com" class="action-btn"><i class="fa-regular fa-envelope"></i> Email</a>
+        <div class="glass bubble-section">
+            <div class="bubble-title">Performed At</div>
+            <div class="bubble-container">
+                <span class="bubble">🎤 Devodasi Chorus [Cotton University]</span>
+                <span class="bubble">🎭 The Stage [SMLC]</span>
+                <span class="bubble">🎼 Jyotika Sangeet Academy [Guwahati]</span>
+                <span class="bubble">🏛️ Srimanta Sankardev Auditorium [MVM]</span>
+            </div>
+        </div>
     </div>
 
-    <!-- BOTTOM NAVIGATION DOCK -->
-    <div class="dock-container">
-        <nav class="glass dock">
-            <button class="dock-btn" onclick="navigate('contact')" id="btn-contact">
-                <i class="fa-solid fa-circle-question"></i>
+    <!-- SEARCH BAR PAGE -->
+    <div id="search" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-magnifying-glass"></i> Search</h2>
+        
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon-inside"></i>
+            <input type="text" class="search-input" placeholder="Search (Music, Discord, GitHub...)" onkeyup="filterSearch(this.value)">
+        </div>
+        
+        <!-- Beautiful Grid for Search Actions -->
+        <div id="search-results" class="search-results-grid">
+            <div class="search-btn search-target" onclick="navigate('music')">
+                <span class="emoji">🎵</span>
+                <span>Music Library</span>
+            </div>
+            <a href="https://certificates.trinitycollege.com/949838b5-8e8f-4a18-a0a8-7193400d796a?key=5613e4cd544405a1507f7ac639d339013cc8b5da49fe98813884d7b74272f618#acc.YQquMBIm" target="_blank" class="search-btn search-target">
+                <span class="emoji">📜</span>
+                <span>Certification</span>
+            </a>
+            <div class="search-btn search-target" onclick="navigate('guitar')">
+                <span class="emoji">🎸</span>
+                <span>Guitar Showcase</span>
+            </div>
+            <div class="search-btn search-target" onclick="navigate('flute')">
+                <span class="emoji">🌬️</span>
+                <span>Flute Videos</span>
+            </div>
+            <div class="search-btn search-target" onclick="navigate('tech')">
+                <span class="emoji">⚡</span>
+                <span>Tech Projects</span>
+            </div>
+            <a href="https://github.com/abhirupbora" target="_blank" class="search-btn search-target">
+                <span class="emoji">💻</span>
+                <span>GitHub Repos</span>
+            </a>
+            <a href="https://discord.gg/VQb7g8Hhns" target="_blank" class="search-btn search-target">
+                <span class="emoji">💬</span>
+                <span>Discord Server</span>
+            </a>
+            <a href="https://www.youtube.com/@SleepyLimee" target="_blank" class="search-btn search-target">
+                <span class="emoji">🎥</span>
+                <span>YouTube Channel</span>
+            </a>
+            
+            <button class="search-btn search-target premium-search" style="grid-column: 1 / -1; margin-top: 10px;" onclick="openPremiumModal()">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp Connection <i class="fa-solid fa-lock" style="font-size:12px; margin-left:5px;"></i></span>
             </button>
-            <button class="dock-btn" onclick="navigate('about')" id="btn-about">
-                <i class="fa-solid fa-trophy"></i>
-            </button>
-            <button class="dock-btn active-dock" onclick="navigate('home')" id="btn-home">
-                <i class="fa-solid fa-house"></i>
-            </button>
-            <button class="dock-btn" onclick="navigate('search')" id="btn-search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+        </div>
+    </div>
+
+    <!-- EXPLORE PAGE -->
+    <div id="explore" class="page">
+        <h2 class="page-header"><i class="fa-solid fa-compass"></i> Explore</h2>
+        
+        <button class="glass action-btn" style="margin-bottom:12px;" onclick="openCollabModal()">Collaborate with Me 😊</button>
+        <button class="glass action-btn premium-btn" style="margin-bottom:12px;" onclick="openPremiumModal()">Purchase Premium 💲</button>
+        <a href="https://my.play/AbhirupBora" target="_blank" class="glass action-btn" style="margin-bottom:12px;">Play With Me 🎮</a>
+        <button class="glass action-btn" style="margin-bottom:12px;" onclick="openTravelModal()">Travel with Me ✈️</button>
+        <button class="glass action-btn" style="margin-bottom:12px;" onclick="openJamModal()">Jam with Me 🎵</button>
+        <button class="glass action-btn" style="margin-bottom:30px;" onclick="openMeetingModal()">Reserve a meeting 🗓️</button>
+
+        <p style="text-align:center; margin-bottom:15px; font-weight:600;">- My Inspiration -</p>
+        <div class="inspiration-grid">
+            <a href="https://en.wikipedia.org/wiki/Zubeen_Garg" target="_blank" style="text-decoration:none;">
+                <img src="ZubeenGarg.jpg" class="inspire-circle">
+                <p class="inspire-name">Zubeen Garg</p>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Bhupen_Hazarika" target="_blank" style="text-decoration:none;">
+                <img src="BhupenHazarika.jpg" class="inspire-circle">
+                <p class="inspire-name">Bhupen Hazarika</p>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/A._P._J._Abdul_Kalam" target="_blank" style="text-decoration:none;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/A._P._J._Abdul_Kalam_in_2008.jpg" class="inspire-circle">
+                <p class="inspire-name">Dr. APJ Abdul Kalam</p>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Nelson_Mandela" target="_blank" style="text-decoration:none;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Nelson_Mandela_1994.jpg" class="inspire-circle">
+                <p class="inspire-name">Nelson Mandela</p>
+            </a>
+            <a href="https://en.wikipedia.org/wiki/Nikola_Tesla" target="_blank" style="text-decoration:none;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg" class="inspire-circle">
+                <p class="inspire-name">Nikola Tesla</p>
+            </a>
+            <div style="text-decoration:none; cursor:pointer;">
+                <img src="Teacher.png" class="inspire-circle">
+                <p class="inspire-name">All my teachers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN BOTTOM DOCK -->
+    <div class="main-dock-wrapper">
+        <nav class="main-dock">
+            <button class="dock-btn" onclick="navigate('contact')" id="btn-contact"><i class="fa-solid fa-circle-question"></i></button>
+            <button class="dock-btn" onclick="navigate('about')" id="btn-about"><i class="fa-solid fa-trophy"></i></button>
+            <button class="dock-btn active" onclick="navigate('home')" id="btn-home"><i class="fa-solid fa-house"></i></button>
+            <button class="dock-btn" onclick="navigate('explore')" id="btn-explore"><i class="fa-regular fa-compass"></i></button>
+            <button class="dock-btn" onclick="navigate('search')" id="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
         </nav>
     </div>
 
-    <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT LOGIC (Updated with Hash Routing for Back Button Support) -->
     <script>
-        // Intro Screen logic
-        function enterPortfolio() {
-            const intro = document.getElementById('intro-screen');
-            // Slide up and fade out
-            intro.style.transform = 'translateY(-100vh) scale(0.9)';
-            intro.style.opacity = '0';
+        // 1. Enter Site from Login
+        function enterSite() {
+            const login = document.getElementById('login-screen');
+            login.style.opacity = '0';
+            login.style.transform = 'scale(1.1)';
             
-            // Remove from DOM flow after animation finishes
-            setTimeout(() => {
-                intro.style.display = 'none';
-            }, 800);
+            // Set hash to home when entering, if it's empty
+            if (!window.location.hash) {
+                window.location.hash = 'home';
+            }
+            
+            setTimeout(() => { login.style.display = 'none'; }, 600);
         }
 
-        // Navigation logic
+        // 2. Navigation via Hash (This makes the physical back button work)
         function navigate(pageId) {
-            // 1. Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
+            window.location.hash = pageId;
+        }
 
-            // 2. Show target page
-            document.getElementById(pageId).classList.add('active');
+        // Listen for changes in the URL hash (Back button presses trigger this)
+        window.addEventListener('hashchange', handleRouting);
+        window.addEventListener('load', handleRouting);
+
+        function handleRouting() {
+            let pageId = window.location.hash.substring(1);
+            
+            // Default to home if no hash exists yet
+            if (!pageId) {
+                pageId = 'home';
+            }
+
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            
+            // Show target page, or fallback to home if ID is invalid
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            } else {
+                document.getElementById('home').classList.add('active');
+                pageId = 'home';
+            }
+            
             window.scrollTo(0, 0);
 
-            // 3. Update active state on dock icons
-            const dockBtns = document.querySelectorAll('.dock-btn');
-            dockBtns.forEach(btn => btn.classList.remove('active-dock'));
+            // Update Dock highlighting
+            document.querySelectorAll('.dock-btn').forEach(btn => btn.classList.remove('active'));
+            if (pageId === 'contact') document.getElementById('btn-contact').classList.add('active');
+            else if (pageId === 'about') document.getElementById('btn-about').classList.add('active');
+            else if (pageId === 'explore') document.getElementById('btn-explore').classList.add('active');
+            else if (pageId === 'search') document.getElementById('btn-search').classList.add('active');
+            else document.getElementById('btn-home').classList.add('active'); 
+        }
 
-            // Map pages to dock buttons to highlight the right icon
-            if (pageId === 'contact') document.getElementById('btn-contact').classList.add('active-dock');
-            else if (pageId === 'about') document.getElementById('btn-about').classList.add('active-dock');
-            else if (pageId === 'home') document.getElementById('btn-home').classList.add('active-dock');
-            else if (pageId === 'search') document.getElementById('btn-search').classList.add('active-dock');
+        // 3. Search Filter Logic
+        function filterSearch(query) {
+            const items = document.querySelectorAll('.search-target');
+            const lowerQuery = query.toLowerCase();
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(lowerQuery) ? 'flex' : 'none';
+            });
+        }
+
+        // 4. Modal Popups Logic
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalBody = document.getElementById('modal-body');
+        const modalSubmit = document.getElementById('modal-submit');
+
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+        }
+
+        function openPremiumModal() {
+            modalTitle.innerText = "Premium Content";
+            modalDesc.innerText = "This section is locked. Please email me to request your unique access code.";
+            modalBody.innerHTML = `<input type="text" id="premium-code" class="modal-input" placeholder="Enter code (e.g. ASY-710)">`;
+            modalSubmit.innerText = "Unlock";
+            modalSubmit.onclick = () => {
+                const code = document.getElementById('premium-code').value;
+                if(code === "ASY-710") {
+                    alert("Code accepted! (Note: Real video integration coming soon)");
+                    closeModal();
+                } else {
+                    alert("Invalid code. Please email abhirupbora99@gmail.com to request access.");
+                }
+            };
+            modalOverlay.style.display = 'flex';
+        }
+
+        function openCollabModal() {
+            modalTitle.innerText = "Collaborate with Me";
+            modalDesc.innerText = "What kind of project do you have in mind?";
+            modalBody.innerHTML = `
+                <select id="collab-type" class="modal-input">
+                    <option>Science</option>
+                    <option>Software Development</option>
+                    <option>Music Development</option>
+                </select>
+                <input type="text" id="collab-reason" class="modal-input" placeholder="Reason / Idea...">
+            `;
+            modalSubmit.innerText = "Send Request";
+            modalSubmit.onclick = () => {
+                const type = document.getElementById('collab-type').value;
+                const reason = document.getElementById('collab-reason').value;
+                window.location.href = `mailto:abhirupbora99@gmail.com?subject=Collaboration: ${type}&body=${reason}`;
+                closeModal();
+            };
+            modalOverlay.style.display = 'flex';
+        }
+
+        function openTravelModal() {
+            modalTitle.innerText = "Travel with Me";
+            modalDesc.innerText = "Plan an adventure together.";
+            modalBody.innerHTML = `
+                <input type="text" id="travel-dest" class="modal-input" placeholder="Destination">
+                <input type="text" id="travel-reason" class="modal-input" placeholder="Reason">
+                <input type="date" id="travel-time" class="modal-input">
+            `;
+            modalSubmit.innerText = "Send Plan";
+            modalSubmit.onclick = () => {
+                const dest = document.getElementById('travel-dest').value;
+                window.location.href = `mailto:abhirupbora99@gmail.com?subject=Travel to ${dest}`;
+                closeModal();
+            };
+            modalOverlay.style.display = 'flex';
+        }
+
+        function openJamModal() {
+            modalTitle.innerText = "Jam with Me";
+            modalDesc.innerText = "Let's make some music! What instrument do you play?";
+            modalBody.innerHTML = `<input type="text" id="jam-inst" class="modal-input" placeholder="Guitar, Vocals, etc...">`;
+            modalSubmit.innerText = "Let's Jam";
+            modalSubmit.onclick = () => {
+                const inst = document.getElementById('jam-inst').value;
+                window.location.href = `mailto:abhirupbora99@gmail.com?subject=Jam Session: ${inst}`;
+                closeModal();
+            };
+            modalOverlay.style.display = 'flex';
+        }
+
+        function openMeetingModal() {
+            modalTitle.innerText = "Reserve a Meeting";
+            modalDesc.innerText = "Let's talk tech, business, or art.";
+            modalBody.innerHTML = `<input type="datetime-local" class="modal-input">`;
+            modalSubmit.innerText = "Request Time";
+            modalSubmit.onclick = () => {
+                window.location.href = `mailto:abhirupbora99@gmail.com?subject=Meeting Request`;
+                closeModal();
+            };
+            modalOverlay.style.display = 'flex';
         }
     </script>
 </body>
